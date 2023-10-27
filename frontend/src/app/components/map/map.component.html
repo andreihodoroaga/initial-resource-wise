@@ -1,0 +1,10 @@
+<div *ngIf="apiLoaded$ | async">
+  <google-map
+    [center]="{lat: locationCoordsLatitude, lng: locationCoordsLongitude}"
+    [options]="{disableDefaultUI: true}"
+    (mapClick)="addMarker($event)"
+  >
+    <map-marker *ngFor="let markerPosition of markerPositions" [position]="markerPosition"
+      [options]="markerOptions"></map-marker>
+  </google-map>
+</div>
