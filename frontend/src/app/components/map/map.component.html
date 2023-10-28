@@ -22,7 +22,8 @@
         <h4>{{ markerInfo.name }}</h4>
         <ng-container *ngIf="markerInfo.donation">
           <p>{{ markerInfo.donation.description }}</p>
-          <img  [src]="mcImage" alt="">
+          <img *ngIf="i" [src]="'../../../assets/images/' + markerInfo.donation.imageName" alt="">
+          <img *ngIf="i === 0" [src]="mcImage" alt="">
           <div class="button-container" *ngIf="markerInfo.donation.imageName">
             <button mat-raised-button color="primary" class="take-button" (click)="takeDonation(markerInfo.name, markerInfo.position)">Take</button>
           </div>
