@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { API_URL } from 'src/constants';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapComponent } from './components/map/map.component';
 import { AngularMaterialModule } from './app-material.module';
@@ -17,8 +16,5 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class AppComponent {
   constructor(private httpClient: HttpClient) {
-    this.httpClient.get(API_URL).subscribe(res => {
-      console.log(res);
-    })
   }
 }

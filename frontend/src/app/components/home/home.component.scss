@@ -1,0 +1,40 @@
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(to right, #FFC0CB 50%, #87CEFA 50%);
+}
+
+.container {
+  display: flex;
+  width: 80vw;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1 1 0;
+  background-color: white;
+  padding: 40px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+button {
+  font-size: 1em;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+}

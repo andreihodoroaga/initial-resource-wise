@@ -1,0 +1,17 @@
+<div class="donor-page">
+  <div class="donor-form-container">
+    <h1>Donor Form</h1>
+    <form [formGroup]="donorForm"  (ngSubmit)="onSubmit()">
+        <label for="image" class="food-image-input-label">Choose Image (jpg, jpeg, png):</label>
+        <div class="food-image-input">
+          <input type="file" id="actual-btn" id="image" name="image" accept=".jpg, .jpeg, .png" required formControlName="image"/>
+        </div>
+        <img id="preview-image" src="" alt="Selected Image" style="max-width: 100%; display: none;">
+        <div class="food-textarea">
+          <label for="description">Food Description (max 100 characters):</label>
+          <textarea id="description" name="description" maxlength="100" required formControlName="description"></textarea><br><br>
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+  </div>
+</div>
