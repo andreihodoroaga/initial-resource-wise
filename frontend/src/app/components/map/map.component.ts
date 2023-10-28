@@ -74,14 +74,14 @@ export class MapComponent {
 
     this.markers = [
       {name: 'McDonalds', position: this.markerPositions[0], donation: this.lastDonation},
-       {name: 'Restaurant Lebada', position: this.markerPositions[1], donation: {imageName: "beneficiary.jpg", description: "Restaurant Lebada"} },
-      {name: 'Matei Cosmin', position: this.markerPositions[2]},
-      {name: 'Maria Ioana', position: this.markerPositions[3]},
-      {name: 'Tudor Popescu', position: this.markerPositions[4]},
-      {name: 'KFC', position: this.markerPositions[5]},
-      {name: 'Covrigarie Luca', position: this.markerPositions[6]},
-      {name: 'Andreea Cantemir', position: this.markerPositions[7]},
-      {name: 'Simona Dumitrescu', position: this.markerPositions[8]},
+       {name: 'Restaurant Lebada', position: this.markerPositions[1], donation: {imageName: "snitelLebada.jpg", description: "snitel de pui cu cartofi"} },
+      {name: 'Matei Cosmin', position: this.markerPositions[2], donation: {imageName: "bananeMateiCosmin.jpg", description: "5 banane"}},
+      {name: 'Maria Ioana', position: this.markerPositions[3], donation: {imageName: "papanasiMariaIoana.jpg", description: "papanasi"}},
+      {name: 'Tudor Popescu', position: this.markerPositions[4], donation: {imageName: "sarmaleTudorPopescu.jpg", description: "sarmale"}},
+      {name: 'KFC', position: this.markerPositions[5], donation: {imageName: "kfc.png", description: "7 wings bucket"}},
+      {name: 'Covrigarie Luca', position: this.markerPositions[6], donation: {imageName: "covrigiluca.jpg", description: "covrigi mixt"}},
+      {name: 'Andreea Cantemir', position: this.markerPositions[7], donation: {imageName: "clatiteAndreeaCantemir.jpg", description: "clatite proaspete cu nutella si gem de fructe de padure"}},
+      {name: 'Simona Dumitrescu', position: this.markerPositions[8], donation: {imageName: "pereSimonaDumitrescu.jpg", description: "pere de casa"}},
 
     ]
 
