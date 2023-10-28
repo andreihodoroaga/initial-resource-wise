@@ -41,6 +41,8 @@ export class MapComponent {
     {lat: 44.41772581526659, lng: 26.120718226078985}
   ];
 
+  iconUrl = "../../../assets/images/home.png";
+
   public markers: any;
   public lastDonation!: any;
   public userLocation!: { lat: number, lng: number; };
@@ -52,8 +54,10 @@ export class MapComponent {
       navigator.geolocation.getCurrentPosition((location) => {
         this.locationCoordsLatitude = location.coords.latitude;
         this.locationCoordsLongitude = location.coords.longitude;
-        this.userLocation.lat = this.locationCoordsLatitude;
-        this.userLocation.lng = this.locationCoordsLongitude;
+        this.userLocation = {
+          lat: location.coords.latitude,
+          lng: location.coords.longitude
+        }
       });
     }
   }

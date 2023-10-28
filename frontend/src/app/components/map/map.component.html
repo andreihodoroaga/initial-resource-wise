@@ -22,11 +22,9 @@
           <p>{{ markerInfo.donation.description }}</p>
           <img  [src]="'../../../assets/images/' + markerInfo.donation.imageName" alt="">
         </ng-container>
-        <ng-container>
-          <map-marker [position]="userLocation" [options]="markerOptions"></map-marker>
-        </ng-container>
       </div>
     </map-info-window>
   </ng-container>
+  <map-marker [position]="userLocation" [options]="markerOptions" [icon]="iconUrl"></map-marker>
   </google-map>
 </div>
