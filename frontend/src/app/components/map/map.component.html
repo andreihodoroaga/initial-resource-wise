@@ -2,11 +2,14 @@
   <google-map
     [center]="{lat: locationCoordsLatitude, lng: locationCoordsLongitude}"
     [options]="{disableDefaultUI: true, fullscreenControl: true}"
-    (mapClick)="addMarker($event)"
+   
     class="full-screen-map"
   >
     <map-marker *ngFor="let markerPosition of markerPositions" [position]="markerPosition"
       [options]="markerOptions"></map-marker>
   </google-map>
 </div>
+
+
+<!-- (mapClick)="addMarker($event)"-->
 
