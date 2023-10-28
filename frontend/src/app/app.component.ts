@@ -7,6 +7,7 @@ import { MapComponent } from './components/map/map.component';
 import { AngularMaterialModule } from './app-material.module';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderComponent } from './components/header/header.component';
+import { API_URL } from 'src/constants';
 
 @Component({
   selector: 'app-root',

@@ -4,7 +4,7 @@
     <form [formGroup]="donorForm"  (ngSubmit)="onSubmit()">
         <label for="image" class="food-image-input-label">Choose Image (jpg, jpeg, png):</label>
         <div class="food-image-input">
-          <input type="file" id="actual-btn" id="image" name="image" accept=".jpg, .jpeg, .png" required formControlName="image"/>
+          <input type="file" id="actual-btn" id="image" name="image" accept=".jpg, .jpeg, .png" required formControlName="image" (change)="onFileSelected($event)"/>
         </div>
         <img id="preview-image" src="" alt="Selected Image" style="max-width: 100%; display: none;">
         <div class="food-textarea">

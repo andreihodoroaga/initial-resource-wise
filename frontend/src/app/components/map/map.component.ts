@@ -7,13 +7,14 @@ import {
 import { AfterViewInit, Component, NgZone, ViewChild } from '@angular/core';
 import { GoogleMap, GoogleMapsModule, MapDirectionsRenderer, MapDirectionsService, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Observable, catchError, map, of } from 'rxjs';
-import { GOOGLE_MAPS_API_KEY } from 'src/constants';
+import { API_URL, GOOGLE_MAPS_API_KEY } from 'src/constants';
 import { MAPS_OPTIONS } from './maps-options';
 import { AngularMaterialModule } from 'src/app/app-material.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AchievementComponent } from '../achievement/achievement.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../confirm/confirm.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export interface DialogData {
   animal: string;
@@ -65,6 +66,7 @@ export class MapComponent implements AfterViewInit{
 
   public markers: any;
   public mcMarker: any;
+  public mcImage: any;
   public lastDonation!: any;
   public userLocation!: { lat: number, lng: number; };
 
@@ -92,14 +94,19 @@ export class MapComponent implements AfterViewInit{
     infoWindow.open(marker);
   }
 
-  constructor(httpClient: HttpClient, private _snackBar: MatSnackBar, public dialog: MatDialog, private mapDirectionsService: MapDirectionsService, private _ngZone: NgZone) {
+  constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar, public dialog: MatDialog, private mapDirectionsService: MapDirectionsService, private _ngZone: NgZone, private sanitizer: DomSanitizer) {
     this.getUserLocation();
 
     this.markers = JSON.parse(localStorage.getItem('markers')!)
 
     if (localStorage.getItem("donations")) {
       const donations = JSON.parse(localStorage.getItem("donations")!);
+
       this.lastDonation = donations[donations.length - 1];
+      this.getImageByFilename(this.lastDonation.imageName).subscribe(blob => {
+        const objectURL = URL.createObjectURL(blob);
+        this.mcImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      })
       this.markers[0].donation = this.lastDonation;
     }
 
@@ -173,6 +180,13 @@ export class MapComponent implements AfterViewInit{
     setTimeout(() => {
       console.log(this.mapElement)
     }, 1000)
+
+  }
+
+  getImageByFilename(filename: string) {
+    return this.httpClient.get(`${API_URL}/images/${filename}`, {
+      responseType: 'blob', // Set the response type to 'blob' to handle image data
+    });
   }
 
 }
