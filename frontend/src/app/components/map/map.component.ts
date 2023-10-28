@@ -4,15 +4,21 @@ import {
   HttpClientJsonpModule,
   HttpClientModule,
 } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { AfterViewInit, Component, NgZone, ViewChild } from '@angular/core';
+import { GoogleMap, GoogleMapsModule, MapDirectionsRenderer, MapDirectionsService, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Observable, catchError, map, of } from 'rxjs';
 import { GOOGLE_MAPS_API_KEY } from 'src/constants';
 import { MAPS_OPTIONS } from './maps-options';
 import { AngularMaterialModule } from 'src/app/app-material.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AchievementComponent } from '../achievement/achievement.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from '../confirm/confirm.component';
 
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-map',
@@ -27,7 +33,17 @@ import { AchievementComponent } from '../achievement/achievement.component';
     AngularMaterialModule,
   ],
 })
-export class MapComponent {
+export class MapComponent implements AfterViewInit{
+  @ViewChild(GoogleMap)
+  mapElement!: GoogleMap;
+
+  @ViewChild('googleMap') gmapElement: any;
+  newMap!: google.maps.Map;
+
+  @ViewChild(MapDirectionsRenderer)
+  mapDirectionsRenderer!: MapDirectionsRenderer;
+
+
   apiLoaded$: Observable<boolean>;
   locationCoordsLatitude!: number;
   locationCoordsLongitude!: number;
@@ -76,14 +92,13 @@ export class MapComponent {
     infoWindow.open(marker);
   }
 
-  constructor(httpClient: HttpClient, private _snackBar: MatSnackBar) {
+  constructor(httpClient: HttpClient, private _snackBar: MatSnackBar, public dialog: MatDialog, private mapDirectionsService: MapDirectionsService, private _ngZone: NgZone) {
     this.getUserLocation();
 
     this.markers = JSON.parse(localStorage.getItem('markers')!)
 
     if (localStorage.getItem("donations")) {
       const donations = JSON.parse(localStorage.getItem("donations")!);
-      console.log(donations)
       this.lastDonation = donations[donations.length - 1];
       this.markers[0].donation = this.lastDonation;
     }
@@ -116,12 +131,48 @@ export class MapComponent {
       );
   }
 
-  takeDonation(markerName: string) {
+  takeDonation(markerName: string, markerPosition: any) {
     setTimeout(() => {
-      this.markers = this.markers.filter((marker: any) => marker.name !== markerName)
-      localStorage.setItem('markers', JSON.stringify(this.markers));
+      this.openDialog(markerName, markerPosition);
     }, 200)
   }
 
+  openDialog(markerName: string, markerPosition: any): void {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      data: {name: 'aba', animal: 'this.animal'},
+    });
+
+    dialogRef.afterClosed().subscribe(takeDonationItem => {
+      if (takeDonationItem) {
+        this.markers = this.markers.filter((marker: any) => marker.name !== markerName)
+        localStorage.setItem('markers', JSON.stringify(this.markers));
+
+        console.log(this.mapDirectionsRenderer)
+        // drive to destionation
+        const directionsDisplay = new google.maps.DirectionsRenderer;
+        directionsDisplay.setMap(this.mapElement.googleMap!);
+
+        this._ngZone.run(() => {
+          const request = {
+            origin: this.userLocation,
+            destination: markerPosition,
+            travelMode: google.maps.TravelMode.WALKING
+          };
+          this.mapDirectionsService.route(request).subscribe(({result, status}) => {
+            if (status == 'OK') {
+              console.log(result);
+              directionsDisplay.setDirections(result!);
+            }
+          });
+        })
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      console.log(this.mapElement)
+    }, 1000)
+  }
 
 }

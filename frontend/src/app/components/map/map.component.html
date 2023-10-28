@@ -1,5 +1,6 @@
 <div *ngIf="apiLoaded$ | async"  class="map-container">
   <google-map
+    #googleMap
     [center]="{lat: locationCoordsLatitude, lng: locationCoordsLongitude}"
     [options]="{disableDefaultUI: true, fullscreenControl: true, styles: mapsOptions}"
     width="100vw"
@@ -7,6 +8,7 @@
     [zoom]="15"
     class="full-screen-map"
   >
+  <!-- <map-directions-renderer></map-directions-renderer> -->
 
   <ng-container *ngFor="let markerInfo of markers; index as i">
     <map-marker #marker="mapMarker"
@@ -22,7 +24,7 @@
           <p>{{ markerInfo.donation.description }}</p>
           <img  [src]="'../../../assets/images/' + markerInfo.donation.imageName" alt="">
           <div class="button-container" *ngIf="markerInfo.donation.imageName">
-            <button mat-raised-button color="primary" class="take-button" (click)="takeDonation(markerInfo.name)">Take</button>
+            <button mat-raised-button color="primary" class="take-button" (click)="takeDonation(markerInfo.name, markerInfo.position)">Take</button>
           </div>
         </ng-container>
       </div>
