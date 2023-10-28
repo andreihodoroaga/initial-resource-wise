@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 import { GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Observable, catchError, map, of } from 'rxjs';
 import { GOOGLE_MAPS_API_KEY } from 'src/constants';
+import { MAPS_OPTIONS } from './maps-options';
 
 
 @Component({
@@ -42,6 +43,8 @@ export class MapComponent {
 
   public markers: any;
   public lastDonation!: any;
+
+  public mapsOptions = MAPS_OPTIONS;
 
   getUserLocation() {
     if (navigator.geolocation) {

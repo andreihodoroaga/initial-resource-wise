@@ -1,8 +1,10 @@
 <div *ngIf="apiLoaded$ | async"  class="map-container">
   <google-map
     [center]="{lat: locationCoordsLatitude, lng: locationCoordsLongitude}"
-    [options]="{disableDefaultUI: true, fullscreenControl: true}"
-
+    [options]="{disableDefaultUI: true, fullscreenControl: true, styles: mapsOptions}"
+    width="100vw"
+    height="100vh"
+    [zoom]="15"
     class="full-screen-map"
   >
   <ng-container *ngFor="let markerInfo of markers; index as i">
