@@ -2,14 +2,25 @@
   <google-map
     [center]="{lat: locationCoordsLatitude, lng: locationCoordsLongitude}"
     [options]="{disableDefaultUI: true, fullscreenControl: true}"
-   
+
     class="full-screen-map"
   >
-    <map-marker *ngFor="let markerPosition of markerPositions" [position]="markerPosition"
-      [options]="markerOptions"></map-marker>
+  <ng-container *ngFor="let markerInfo of markers; index as i">
+    <map-marker #marker="mapMarker"
+      [position]="markerInfo.position"
+      [options]="markerOptions"
+      (mapClick)="openInfoWindow(marker, infoWindow)"
+    >
+    </map-marker>
+    <map-info-window #infoWindow="mapInfoWindow" >
+      <div class="marker-info">
+        <h4>{{ markerInfo.name }}</h4>
+        <ng-container *ngIf="markerInfo.donation">
+          <p>{{ markerInfo.donation.description }}</p>
+          <img  [src]="'../../../assets/images/' + markerInfo.donation.imageName" alt="">
+        </ng-container>
+      </div>
+    </map-info-window>
+  </ng-container>
   </google-map>
 </div>
-
-
-<!-- (mapClick)="addMarker($event)"-->
-

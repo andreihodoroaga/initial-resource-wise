@@ -5,7 +5,7 @@ import {
   HttpClientModule,
 } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Observable, catchError, map, of } from 'rxjs';
 import { GOOGLE_MAPS_API_KEY } from 'src/constants';
 
@@ -40,9 +40,9 @@ export class MapComponent {
     {lat: 44.41772581526659, lng: 26.120718226078985}
   ];
 
-  orders = localStorage.getItem("donations");
+  public markers: any;
+  public lastDonation!: any;
 
-  
   getUserLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((location) => {
@@ -57,10 +57,30 @@ export class MapComponent {
   //   // console.log(event.latLng!.toJSON());
   // }
 
+  public openInfoWindow(marker: MapMarker, infoWindow: MapInfoWindow) {
+    infoWindow.open(marker);
+  }
+
   constructor(httpClient: HttpClient) {
     this.getUserLocation();
 
-    console.log("Donations: ", this.orders)
+    if (localStorage.getItem("donations")) {
+      const donations = JSON.parse(localStorage.getItem("donations")!);
+      this.lastDonation = donations[donations.length - 1];
+    }
+
+    this.markers = [
+      {name: 'McDonalds', position: this.markerPositions[0], donation: this.lastDonation},
+       {name: 'Restaurant Lebada', position: this.markerPositions[1], donation: {imageName: "beneficiary.jpg", description: "Restaurant Lebada"} },
+      {name: 'Matei Cosmin', position: this.markerPositions[2]},
+      {name: 'Maria Ioana', position: this.markerPositions[3]},
+      {name: 'Tudor Popescu', position: this.markerPositions[4]},
+      {name: 'KFC', position: this.markerPositions[5]},
+      {name: 'Covrigarie Luca', position: this.markerPositions[6]},
+      {name: 'Andreea Cantemir', position: this.markerPositions[7]},
+      {name: 'Simona Dumitrescu', position: this.markerPositions[8]},
+
+    ]
 
     this.apiLoaded$ = httpClient
       .jsonp(
@@ -68,11 +88,11 @@ export class MapComponent {
         'callback'
       )
       .pipe(
-        map(() => true),  
+        map(() => true),
         catchError(() => of(false))
       );
   }
 
-  
-  
+
+
 }
