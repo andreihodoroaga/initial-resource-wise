@@ -29,6 +29,8 @@ export class MapComponent {
   markerOptions: google.maps.MarkerOptions = {draggable: false};
   markerPositions: google.maps.LatLngLiteral[] = [];
 
+  orders = localStorage.getItem("donations");
+
   getUserLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((location) => {
@@ -44,6 +46,8 @@ export class MapComponent {
 
   constructor(httpClient: HttpClient) {
     this.getUserLocation();
+
+    console.log("Donations: ", this.orders)
 
     this.apiLoaded$ = httpClient
       .jsonp(

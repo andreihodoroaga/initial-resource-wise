@@ -20,6 +20,20 @@ export class DonorPageComponent {
   }
 
   onSubmit() {
-    console.log(this.donorForm.value)
+    if (this.donorForm.invalid) {
+      return;
+    }
+
+    const existingDonationsInStorage = localStorage.getItem('donations');
+    const existingDonations = existingDonationsInStorage ? JSON.parse(existingDonationsInStorage) : [];
+
+    existingDonations.push({
+      imageName: this.donorForm.value.image!.split('\\').pop(),
+      description: this.donorForm.value.description,
+    })
+
+    localStorage.setItem('donations', JSON.stringify(existingDonations))
+
+    this.donorForm.reset();
   }
 }

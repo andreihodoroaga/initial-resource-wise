@@ -52,18 +52,22 @@ input[type="file"], textarea {
   border-radius: 4px;
 }
 
-input[type="submit"] {
-  background-color: #4CAF50;
+.submit-btn {
+  background-color: #566457;
   color: #fff;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-}
 
-input[type="submit"]:hover {
-background-color: #45a049;
+  &.green {
+    background-color: #4CAF50;
+
+    &:hover {
+      background-color: #45a049;
+    }
+  }
 }
 
 input[type="file"] {
