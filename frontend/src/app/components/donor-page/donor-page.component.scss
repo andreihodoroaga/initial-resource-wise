@@ -6,11 +6,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 95vh;
   margin: 0;
   background-color: #f5f5f5;
-  font-family: 'DM Sans', sans-serif;
-  font-family: 'Inter', sans-serif;
 }
 
 .donor-form-container {
@@ -109,4 +107,22 @@ margin-bottom: 0;
 #file-chosen{
   margin-left: 0.3rem;
   font-family: sans-serif;
+}
+
+.achievements-container {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 25px;
+  top: 5px;
+
+  img {
+    width: 36px;
+    height: 36px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 24px;
+  }
 }

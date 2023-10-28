@@ -1,5 +1,14 @@
 export const MAPS_OPTIONS = [
   {
+    "featureType": "administrative",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
     "featureType": "administrative.land_parcel",
     "elementType": "labels",
     "stylers": [
@@ -10,7 +19,6 @@ export const MAPS_OPTIONS = [
   },
   {
     "featureType": "poi",
-    "elementType": "labels.text",
     "stylers": [
       {
         "visibility": "off"
@@ -18,7 +26,8 @@ export const MAPS_OPTIONS = [
     ]
   },
   {
-    "featureType": "poi.business",
+    "featureType": "poi",
+    "elementType": "labels.text",
     "stylers": [
       {
         "visibility": "off"
