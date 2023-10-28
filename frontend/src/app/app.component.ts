@@ -5,11 +5,13 @@ import { HttpClient } from '@angular/common/http';
 import { API_URL } from 'src/constants';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapComponent } from './components/map/map.component';
+import { AngularMaterialModule } from './app-material.module';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, GoogleMapsModule, MapComponent],
+  imports: [CommonModule, RouterOutlet, GoogleMapsModule, AngularMaterialModule, MatButtonModule, MapComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
