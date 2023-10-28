@@ -48,6 +48,7 @@ export class MapComponent {
   iconUrl = "../../../assets/images/home.png";
 
   public markers: any;
+  public mcMarker: any;
   public lastDonation!: any;
   public userLocation!: { lat: number, lng: number; };
 
@@ -78,14 +79,19 @@ export class MapComponent {
   constructor(httpClient: HttpClient, private _snackBar: MatSnackBar) {
     this.getUserLocation();
 
+    this.markers = JSON.parse(localStorage.getItem('markers')!)
+
     if (localStorage.getItem("donations")) {
       const donations = JSON.parse(localStorage.getItem("donations")!);
+      console.log(donations)
       this.lastDonation = donations[donations.length - 1];
+      this.markers[0].donation = this.lastDonation;
     }
 
+
     // this.markers = [
-    //   {name: 'McDonalds', position: this.markerPositions[0], donation: this.lastDonation},
-    //    {name: 'Restaurant Lebada', position: this.markerPositions[1], donation: {imageName: "snitelLebada.jpg", description: "snitel de pui cu cartofi"} },
+    //   {name: 'McDonalds', position: this.markerPositions[0], donation: null},
+    //   {name: 'Restaurant Lebada', position: this.markerPositions[1], donation: {imageName: "snitelLebada.jpg", description: "snitel de pui cu cartofi"} },
     //   {name: 'Matei Cosmin', position: this.markerPositions[2], donation: {imageName: "bananeMateiCosmin.jpg", description: "5 banane"}},
     //   {name: 'Maria Ioana', position: this.markerPositions[3], donation: {imageName: "papanasiMariaIoana.jpg", description: "papanasi"}},
     //   {name: 'Tudor Popescu', position: this.markerPositions[4], donation: {imageName: "sarmaleTudorPopescu.jpg", description: "sarmale"}},
@@ -96,7 +102,8 @@ export class MapComponent {
 
     // ]
 
-    this.markers = JSON.parse(localStorage.getItem('markers')!)
+    // localStorage.setItem('markers', JSON.stringify(this.markers));
+
 
     this.apiLoaded$ = httpClient
       .jsonp(
