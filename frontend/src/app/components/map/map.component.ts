@@ -107,6 +107,9 @@ export class MapComponent implements AfterViewInit{
         const objectURL = URL.createObjectURL(blob);
         this.mcImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       })
+      if (this.markers[0].name !== 'McDonalds') {
+        this.markers.unshift({name: 'McDonalds', position: this.markerPositions[0], donation: null})
+      }
       this.markers[0].donation = this.lastDonation;
     }
 
