@@ -21,6 +21,9 @@
         <ng-container *ngIf="markerInfo.donation">
           <p>{{ markerInfo.donation.description }}</p>
           <img  [src]="'../../../assets/images/' + markerInfo.donation.imageName" alt="">
+          <div class="button-container">
+            <button mat-raised-button color="primary" class="take-button" (click)="takeDonation(markerInfo.name)">Take</button>
+          </div>
         </ng-container>
       </div>
     </map-info-window>

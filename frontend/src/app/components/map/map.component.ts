@@ -9,6 +9,9 @@ import { GoogleMapsModule, MapInfoWindow, MapMarker } from '@angular/google-maps
 import { Observable, catchError, map, of } from 'rxjs';
 import { GOOGLE_MAPS_API_KEY } from 'src/constants';
 import { MAPS_OPTIONS } from './maps-options';
+import { AngularMaterialModule } from 'src/app/app-material.module';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AchievementComponent } from '../achievement/achievement.component';
 
 
 @Component({
@@ -21,6 +24,7 @@ import { MAPS_OPTIONS } from './maps-options';
     HttpClientJsonpModule,
     CommonModule,
     GoogleMapsModule,
+    AngularMaterialModule,
   ],
 })
 export class MapComponent {
@@ -71,7 +75,7 @@ export class MapComponent {
     infoWindow.open(marker);
   }
 
-  constructor(httpClient: HttpClient) {
+  constructor(httpClient: HttpClient, private _snackBar: MatSnackBar) {
     this.getUserLocation();
 
     if (localStorage.getItem("donations")) {
@@ -79,18 +83,20 @@ export class MapComponent {
       this.lastDonation = donations[donations.length - 1];
     }
 
-    this.markers = [
-      {name: 'McDonalds', position: this.markerPositions[0], donation: this.lastDonation},
-       {name: 'Restaurant Lebada', position: this.markerPositions[1], donation: {imageName: "snitelLebada.jpg", description: "snitel de pui cu cartofi"} },
-      {name: 'Matei Cosmin', position: this.markerPositions[2], donation: {imageName: "bananeMateiCosmin.jpg", description: "5 banane"}},
-      {name: 'Maria Ioana', position: this.markerPositions[3], donation: {imageName: "papanasiMariaIoana.jpg", description: "papanasi"}},
-      {name: 'Tudor Popescu', position: this.markerPositions[4], donation: {imageName: "sarmaleTudorPopescu.jpg", description: "sarmale"}},
-      {name: 'KFC', position: this.markerPositions[5], donation: {imageName: "kfc.png", description: "7 wings bucket"}},
-      {name: 'Covrigarie Luca', position: this.markerPositions[6], donation: {imageName: "covrigiluca.jpg", description: "covrigi mixt"}},
-      {name: 'Andreea Cantemir', position: this.markerPositions[7], donation: {imageName: "clatiteAndreeaCantemir.jpg", description: "clatite proaspete cu nutella si gem de fructe de padure"}},
-      {name: 'Simona Dumitrescu', position: this.markerPositions[8], donation: {imageName: "pereSimonaDumitrescu.jpg", description: "pere de casa"}},
+    // this.markers = [
+    //   {name: 'McDonalds', position: this.markerPositions[0], donation: this.lastDonation},
+    //    {name: 'Restaurant Lebada', position: this.markerPositions[1], donation: {imageName: "snitelLebada.jpg", description: "snitel de pui cu cartofi"} },
+    //   {name: 'Matei Cosmin', position: this.markerPositions[2], donation: {imageName: "bananeMateiCosmin.jpg", description: "5 banane"}},
+    //   {name: 'Maria Ioana', position: this.markerPositions[3], donation: {imageName: "papanasiMariaIoana.jpg", description: "papanasi"}},
+    //   {name: 'Tudor Popescu', position: this.markerPositions[4], donation: {imageName: "sarmaleTudorPopescu.jpg", description: "sarmale"}},
+    //   {name: 'KFC', position: this.markerPositions[5], donation: {imageName: "kfc.png", description: "7 wings bucket"}},
+    //   {name: 'Covrigarie Luca', position: this.markerPositions[6], donation: {imageName: "covrigiluca.jpg", description: "covrigi mixt"}},
+    //   {name: 'Andreea Cantemir', position: this.markerPositions[7], donation: {imageName: "clatiteAndreeaCantemir.jpg", description: "clatite proaspete cu nutella si gem de fructe de padure"}},
+    //   {name: 'Simona Dumitrescu', position: this.markerPositions[8], donation: {imageName: "pereSimonaDumitrescu.jpg", description: "pere de casa"}},
 
-    ]
+    // ]
+
+    this.markers = JSON.parse(localStorage.getItem('markers')!)
 
     this.apiLoaded$ = httpClient
       .jsonp(
@@ -103,6 +109,12 @@ export class MapComponent {
       );
   }
 
+  takeDonation(markerName: string) {
+    setTimeout(() => {
+      this.markers = this.markers.filter((marker: any) => marker.name !== markerName)
+      localStorage.setItem('markers', JSON.stringify(this.markers));
+    }, 200)
+  }
 
 
 }
