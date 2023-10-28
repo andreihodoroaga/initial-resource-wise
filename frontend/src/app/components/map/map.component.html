@@ -7,6 +7,7 @@
     [zoom]="15"
     class="full-screen-map"
   >
+
   <ng-container *ngFor="let markerInfo of markers; index as i">
     <map-marker #marker="mapMarker"
       [position]="markerInfo.position"
@@ -20,6 +21,9 @@
         <ng-container *ngIf="markerInfo.donation">
           <p>{{ markerInfo.donation.description }}</p>
           <img  [src]="'../../../assets/images/' + markerInfo.donation.imageName" alt="">
+        </ng-container>
+        <ng-container>
+          <map-marker [position]="userLocation" [options]="markerOptions"></map-marker>
         </ng-container>
       </div>
     </map-info-window>

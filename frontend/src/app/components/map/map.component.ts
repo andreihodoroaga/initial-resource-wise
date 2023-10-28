@@ -43,6 +43,7 @@ export class MapComponent {
 
   public markers: any;
   public lastDonation!: any;
+  public userLocation!: { lat: number, lng: number; };
 
   public mapsOptions = MAPS_OPTIONS;
 
@@ -51,6 +52,8 @@ export class MapComponent {
       navigator.geolocation.getCurrentPosition((location) => {
         this.locationCoordsLatitude = location.coords.latitude;
         this.locationCoordsLongitude = location.coords.longitude;
+        this.userLocation.lat = this.locationCoordsLatitude;
+        this.userLocation.lng = this.locationCoordsLongitude;
       });
     }
   }
